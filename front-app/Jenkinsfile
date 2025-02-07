@@ -6,12 +6,23 @@ pipeline {
         PNPM_HOME = '/var/jenkins_home/.local/share/pnpm' // pnpm 설치 경로 설정
         PATH = "$PNPM_HOME:$PATH" 
     }
+    
     stages {
+
         stage('Install pnpm') {
             steps {
                 script {
                     // `bash`로 설치 명령 실행
                     sh '/bin/bash -c "curl -fsSL https://get.pnpm.io/install.sh | bash"'
+                }
+            }
+        }
+
+        stage('Check for package.json') {
+            steps {
+                script {
+                    // 프로젝트 루트 디렉토리의 파일 목록 확인
+                    sh 'ls -al /var/jenkins_home/workspace/front-app'
                 }
             }
         }
