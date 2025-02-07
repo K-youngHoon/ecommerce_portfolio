@@ -19,7 +19,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'pnpm next build'
+                sh 'pnpm build'
             }
         }
 
