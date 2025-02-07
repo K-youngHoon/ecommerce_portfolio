@@ -4,10 +4,17 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'front-main', url: 'git@github.com:K-youngHoon/ecommerce_portfolio.git'
+                git branch: 'front-main', url: 'git@github.com:your-repo.git'
             }
         }
 
+        stage('Install Dependencies') {
+            steps {
+                script {
+                    sh 'pnpm install'
+                }
+            }
+        }
 
         stage('Build') {
             steps {
