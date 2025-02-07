@@ -8,13 +8,26 @@ pipeline {
         //     }
         // }
 
-        stage('Install Dependencies') {
-            steps {
-                script {
-                    sh 'pnpm install'
-                }
-            }
+stage('Install Dependencies') {
+    steps {
+        script {
+            // pnpm 설치
+            sh '''
+                if ! command -v pnpm &> /dev/null
+                then
+                    echo "pnpm not found, installing..."
+                    curl -fsSL https://get.pnpm.io/install.sh | bash
+                    export PATH="$HOME/.local/share/pnpm:$PATH"
+                else
+                    echo "pnpm is already installed"
+                fi
+            '''
+
+            // pnpm install 실행
+            sh 'pnpm install'
         }
+    }
+}
 
         stage('Build') {
             steps {
