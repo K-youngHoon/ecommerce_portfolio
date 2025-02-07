@@ -1,11 +1,15 @@
 pipeline {
     agent any
 
+    environment {
+        SHELL = '/bin/bash'  // 셸 명시적 설정
+    }
     stages {
         stage('Install pnpm') {
             steps {
                 script {
-                    sh '/bin/bash -c "curl -fsSL https://get.pnpm.io/install.sh | sh -"'
+                    // `bash`로 설치 명령 실행
+                    sh '/bin/bash -c "curl -fsSL https://get.pnpm.io/install.sh | bash"'
                 }
             }
         }
