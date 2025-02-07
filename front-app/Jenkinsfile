@@ -9,29 +9,34 @@ pipeline {
     
     stages {
 
-        stage('Install pnpm') {
-            steps {
-                script {
-                    // `bash`로 설치 명령 실행
-                    sh '/bin/bash -c "curl -fsSL https://get.pnpm.io/install.sh | bash"'
-                }
-            }
-        }
+        // stage('Install pnpm') {
+        //     steps {
+        //         script {
+        //             // `bash`로 설치 명령 실행
+        //             sh '/bin/bash -c "curl -fsSL https://get.pnpm.io/install.sh | bash"'
+        //         }
+        //     }
+        // }
 
-        stage('Check for package.json') {
-            steps {
-                script {
-                    // 프로젝트 루트 디렉토리의 파일 목록 확인
-                    sh 'ls -al /var/jenkins_home/workspace/front-app'
-                }
-            }
-        }
+        // stage('Check for package.json') {
+        //     steps {
+        //         script {
+        //             // 프로젝트 루트 디렉토리의 파일 목록 확인
+        //             sh 'ls -al /var/jenkins_home/workspace/front-app'
+        //         }
+        //     }
+        // }
 
         stage('Build') {
             steps {
-                sh 'pnpm next build'
+                script {
+                    // front-app 디렉토리로 이동 후 pnpm 실행
+                    sh 'cd /var/jenkins_home/workspace/front-app/front-app && pnpm install'
+                    sh 'cd /var/jenkins_home/workspace/front-app/front-app && pnpm run build'
+                }
             }
         }
+
 
         // stage('Deploy') {
         //     steps {
