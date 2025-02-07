@@ -8,14 +8,6 @@ pipeline {
             }
         }
 
-        stage('Install Dependencies') {
-            steps {
-                script {
-                    sh 'corepack enable'
-                    sh 'pnpm install'
-                }
-            }
-        }
 
         stage('Build') {
             steps {
