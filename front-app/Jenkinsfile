@@ -2,7 +2,11 @@ pipeline {
     agent any
 
     stages {
-
+        stage('Checkout') {
+            steps {
+                git branch: 'front-main', url: 'git@github.com:K-youngHoon/ecommerce_portfolio.git'
+            }
+        }
 
         stage('Install Dependencies') {
             steps {
