@@ -1,11 +1,12 @@
 pipeline {
     agent any
 
-    // environment {
-    //     SHELL = '/bin/bash'  // 셸 명시적 설정
-    //     PNPM_HOME = '/var/jenkins_home/.local/share/pnpm' // pnpm 설치 경로 설정
-    //     PATH = "$PNPM_HOME:$PATH" 
-    // }
+    environment {
+        // SHELL = '/bin/bash'  // 셸 명시적 설정
+     PNPM_HOME = '/var/jenkins_home/.local/share/pnpm' // pnpm installation path
+    NODE_HOME = '/path/to/node' // Add your Node.js installation path here
+    PATH = "$PNPM_HOME:$NODE_HOME:$PATH" // Ensure both pnpm and node are in the path
+}
     
     stages {
 
