@@ -4,7 +4,7 @@ pipeline {
     environment {
         // SHELL = '/bin/bash'  // 셸 명시적 설정
      PNPM_HOME = '/var/jenkins_home/.local/share/pnpm' // pnpm installation path
-    NODE_HOME = '/path/to/node' // Add your Node.js installation path here
+    NODE_HOME = '/var/jenkins_home/.local/share/node' // Add your Node.js installation path here
     PATH = "$PNPM_HOME:$NODE_HOME:$PATH" // Ensure both pnpm and node are in the path
 }
     
