@@ -15,13 +15,6 @@ pipeline {
                 }
             }
         }
-        stage('Install Dependencies') {
-            steps {
-                script {
-                    sh 'pnpm install'
-                }
-            }
-        }
 
         stage('Build') {
             steps {
