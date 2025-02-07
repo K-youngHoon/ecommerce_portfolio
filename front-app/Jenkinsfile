@@ -1,10 +1,13 @@
 pipeline {
     agent any
 
+    tools {nodejs "nodejs"}
+
     environment {
         PNPM_HOME = '/var/jenkins_home/.local/share/pnpm'  // pnpm 설치 경로
-        NODE_HOME = '/var/jenkins_home/.local/share'  // node 설치 경로 (적절히 수정)
-        PATH = "$PNPM_HOME:$NODE_HOME:$PATH"  // pnpm과 node를 PATH에 포함
+        // NODE_HOME = '/var/jenkins_home/.local/share'  // node 설치 경로 
+        PATH = "$PNPM_HOME:$PATH"  // pnpm과 node를 PATH에 포함
+        // PATH = "$PNPM_HOME:$NODE_HOME:$PATH"  // pnpm과 node를 PATH에 포함
 }
     
     stages {
