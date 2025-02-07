@@ -1,32 +1,16 @@
 pipeline {
     agent any
-
     stages {
-        stage('Checkout') {
+        stage('build') {
             steps {
-                git branch: 'front-main', url: 'git@github.com:K-youngHoon/ecommerce_portfolio.git'
             }
         }
-
-        stage('Install Dependencies') {
-            steps {
-                script {
-                    sh 'corepack enable'
-                    sh 'pnpm install'
-                }
+        stage('test'){
+            steps{
             }
         }
-
-        stage('Build') {
-            steps {
-                sh 'pnpm build'
+        stage('doker build'){
+            steps{
             }
-        }
-
-        stage('Deploy') {
-            steps {
-                sh 'pm2 restart ecosystem.config.js'
-            }
-        }
     }
 }
