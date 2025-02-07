@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         PNPM_HOME = '/var/jenkins_home/.local/share/pnpm'  // pnpm 설치 경로
-        NODE_HOME = '/front-app'  // node 설치 경로 (적절히 수정)
+        NODE_HOME = '/var/jenkins_home/.local/share'  // node 설치 경로 (적절히 수정)
         PATH = "$PNPM_HOME:$NODE_HOME:$PATH"  // pnpm과 node를 PATH에 포함
 }
     
