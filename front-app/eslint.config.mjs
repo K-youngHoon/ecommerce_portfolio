@@ -1,16 +1,58 @@
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-import { FlatCompat } from "@eslint/eslintrc";
+import globals from "globals";
+import eslint from "@eslint/js";
+import tseslint from "typescript-eslint";
+import eslintPluginReact from "eslint-plugin-react";
+import eslintPluginReactHooks from "eslint-plugin-react-hooks";
+import eslintPluginReactPromise from "eslint-plugin-promise";
+import eslintPluginReactRefresh from "eslint-plugin-react-refresh";
+import eslintPluginReactImport from "eslint-plugin-import";
+import eslintPluginReactNode from "eslint-plugin-node";
+import eslintPluginReactPrettier from "eslint-plugin-prettier";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+export default tseslint.config(
+  { configs: { ignores: ["dist", "node_modules"] } },
+  eslint.configs.recommended,
+  ...tseslint.configs.recommended,
+  {
+    files: [" ** / *. {js,jsx,ts,tsx}"],
+    LanguageOptions: {
+      ecmaVersion: 2020,
+      globals: globals.browser,
+    },
+    plugins: {
+      react: eslintPluginReact,
+      "react-hooks": eslintPluginReactHooks,
+      "react-refresh": eslintPluginReactRefresh,
+      promise: eslintPluginReactPromise,
+      import: eslintPluginReactImport,
+      node: eslintPluginReactNode,
+      prettier: eslintPluginReactPrettier,
+    },
+    rules: {
+      semi: ["error", "never"],
+      indent: ["error", 2],
+      "no-unused-vars": "warn",
+      "no-console": "warn",
+      ...eslintPluginReact.configs.flat.recommended.rules,
+      ...eslintPluginReactHooks.configs.recommended.rules,
+      "react/jsx-uses-vars": "error",
+      "react/react-in-jsx-scope": "off",
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "warn",
+      "react-refresh/only-export-components": "warn",
 
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
+      "import/no-unresolved": "error",
+      "import/named": "error",
+      "import/default": "error",
+      "import/no-duplicates": "warn",
 
-const eslintConfig = [
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
-];
+      "node/no-missing-import": "error",
+      "node/no-extraneous-import": "warn",
 
-export default eslintConfig;
+      "prettier/prettier": ["error", { singleQuote: true, semi: false }],
+
+      "promise/always-return": "warn",
+      "promise/no-return-wrap": "error",
+    },
+  }
+);
