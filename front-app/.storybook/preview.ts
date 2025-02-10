@@ -9,6 +9,8 @@ const preview: Preview = {
       },
     },
   },
+
+  //  decorators: [(story) => <div style={{ padding: 100 }}>{story()}</div>], //모든스토리 적용
 };
 
 export default preview;
