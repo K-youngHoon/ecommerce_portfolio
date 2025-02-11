@@ -26,9 +26,12 @@ Sentry.init({
 });
 //에러예제
 // try {
-//   throw "에러  test";
-// } catch (e) {
-//   captureException(e);
+//   const res = await instance.get(`/static/market/cmp/list`);
+
+//   return res.data;
+// } catch (err) {
+//   Sentry.captureException(err);
+//   throw err;
 // }
 // captureMessage("captureMessage test");
 // captureEvent({
