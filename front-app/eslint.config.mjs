@@ -8,6 +8,7 @@ import eslintPluginReactRefresh from "eslint-plugin-react-refresh";
 import eslintPluginReactImport from "eslint-plugin-import";
 import eslintPluginReactNode from "eslint-plugin-node";
 import eslintPluginReactPrettier from "eslint-plugin-prettier";
+import eslintPluginJest from "eslint-plugin-jest";
 
 export default tseslint.config(
   { configs: { ignores: ["dist", "node_modules"] } },
@@ -15,6 +16,7 @@ export default tseslint.config(
   ...tseslint.configs.recommended,
   {
     files: [" ** / *. {js,jsx,ts,tsx}"],
+    ...eslintPluginJest.configs["flat/recommended"],
     LanguageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
@@ -31,6 +33,8 @@ export default tseslint.config(
     rules: {
       semi: ["error", "never"],
       indent: ["error", 2],
+      ...eslintPluginJest.configs["flat/recommended"].rules,
+      "jest/prefer-expect-assertions": "off",
       "no-unused-vars": "warn",
       "no-console": "warn",
       ...eslintPluginReact.configs.flat.recommended.rules,
