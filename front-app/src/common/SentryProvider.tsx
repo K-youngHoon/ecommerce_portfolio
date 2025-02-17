@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 import * as Sentry from "@sentry/nextjs";
 
-import { SentryError } from "./SentryError";
+import { SentryErrorPage } from "./SentryErrorPage";
 
 type Props = {
   children: ReactNode;
@@ -9,7 +9,7 @@ type Props = {
 
 const SentryProvider = ({ children }: Props) => {
   return (
-    <Sentry.ErrorBoundary fallback={<SentryError />}>
+    <Sentry.ErrorBoundary fallback={<SentryErrorPage />}>
       {children}
     </Sentry.ErrorBoundary>
   );

@@ -1,2 +1,2 @@
-export * from "./SentryError";
+export * from "./SentryErrorPage";
 export * from "./SentryProvider";
