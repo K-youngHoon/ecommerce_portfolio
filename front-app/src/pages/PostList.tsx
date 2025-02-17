@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { usePosts } from "../hooks/usePosts";
 
-export const PostList = () => {
+export default () => {
   const [postCount, setPostCount] = useState(10);
   const { data, isPending, isFetching } = usePosts(postCount);
 
