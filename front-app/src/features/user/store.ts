@@ -1,12 +1,12 @@
 import { create } from "zustand";
-import { User } from "@src/domain/user.model";
+import { User } from "./model";
 
-interface UserStore {
+interface IUserStore {
   currentUser: User | null;
   setCurrentUser: (user: User) => void;
 }
 
-export const useUserStore = create<UserStore>((set) => ({
+export const useUserStore = create<IUserStore>((set) => ({
   currentUser: null,
   setCurrentUser: (user: User) => set({ currentUser: user }),
 }));

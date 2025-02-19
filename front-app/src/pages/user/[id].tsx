@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/router";
-import { useUser } from "@src/application/user.adapter";
-import { useUserStore } from "@src/stores/user.store";
+import { useUser, useUserStore } from "@src/features/user";
 
 export default function UserPage() {
   const router = useRouter();
@@ -9,7 +8,7 @@ export default function UserPage() {
   const { data: user, isLoading, error } = useUser(id as string);
   const setCurrentUser = useUserStore((state) => state.setCurrentUser);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (user) {
       setCurrentUser(user);
     }
