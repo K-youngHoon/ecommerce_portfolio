@@ -16,6 +16,7 @@
     "paths": {
       "@src/*": ["./src/*"]
     },
+    "jsxImportSource": "@emotion/react",
     "types": ["jest"]
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "jest.config.ts"],
