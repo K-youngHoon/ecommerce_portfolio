@@ -2,7 +2,7 @@ import { useTheme } from "@src/hooks";
 import { useCounter } from "@src/hooks/useCounter";
 import { Button } from "@src/components";
 
-export default () => {
+export default function ButtonPage() {
   const { isDark, toggleTheme } = useTheme();
   const { count, increment, decrement, reset } = useCounter(0);
 
@@ -22,4 +22,4 @@ export default () => {
       </Button>
     </div>
   );
-};
+}
