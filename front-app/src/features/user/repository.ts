@@ -1,7 +1,7 @@
 import axios from "axios";
 import { User } from "./model";
 
-export const userApi = {
+export const userRepository = {
   async getUser(id: string): Promise<User | null> {
     const { data } = await axios.get(`/api/users/${id}`);
     return data ?? null;
