@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { useRouter } from "next/router";
-import { useUser, useUserStore } from "@src/features/user";
+import { useGetUser, useUserStore } from "@src/features/user";
 
 export default function UserPage() {
   const router = useRouter();
   const { id } = router.query;
-  const { data: user, isLoading, error } = useUser(id as string);
+  const { data: user, isLoading, error } = useGetUser(id as string);
   const setCurrentUser = useUserStore((state) => state.setCurrentUser);
 
   useEffect(() => {

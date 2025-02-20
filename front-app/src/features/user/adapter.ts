@@ -8,7 +8,7 @@ export const useUserStore = create<IUserStore>((set) => ({
   setCurrentUser: (user: User) => set({ currentUser: user }),
 }));
 
-export const useUser = (id: string) => {
+export const useGetUser = (id: string) => {
   return useQuery({
     queryKey: ["user", id],
     queryFn: () => userUsecase.getUser(id),
