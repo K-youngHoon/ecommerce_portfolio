@@ -1,10 +1,17 @@
 import { User, userSchema } from "./model";
 import { userRepository } from "./repository";
 import { userService } from "./service";
+import { ICreateUserParams } from "./type";
 
 export const userUsecase = {
   getUser: async (id: string): Promise<User | null> => {
     return userRepository.getUser(id); // 애플리케이션 계층에서 Repository 사용
+  },
+  delUser: async (id: string): Promise<Response | null> => {
+    return userRepository.deleteUser(id); // 애플리케이션 계층에서 Repository 사용
+  },
+  updateUser: async (id: string, user: User): Promise<User | null> => {
+    return userRepository.updateUser(id, user); // 애플리케이션 계층에서 Repository 사용
   },
 
   createUser: async (params: ICreateUserParams) => {
@@ -25,9 +32,3 @@ export const userUsecase = {
     return savedUser;
   },
 };
-
-interface ICreateUserParams {
-  id: string;
-  name: string;
-  age: number;
-}
