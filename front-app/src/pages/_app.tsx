@@ -1,12 +1,18 @@
 import "@src/styles/globals.scss";
 import type { AppProps } from "next/app";
-import { SentryProvider, TanstackQueryProvider } from "../common";
+import {
+  StoreProvider,
+  SentryProvider,
+  TanstackQueryProvider,
+} from "../common";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <SentryProvider>
       <TanstackQueryProvider pageProps={pageProps}>
-        <Component {...pageProps} />
+        <StoreProvider>
+          <Component {...pageProps} />
+        </StoreProvider>
       </TanstackQueryProvider>
     </SentryProvider>
   );

@@ -1,12 +1,13 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/router";
-import { useGetUser, useUserStore } from "@src/features/user";
+import { useGetUser } from "@src/features/user";
+import { useStore } from "@src/stores";
 
 export default function UserPage() {
   const router = useRouter();
   const { id } = router.query;
   const { data: user, isLoading, error } = useGetUser(id as string);
-  const setCurrentUser = useUserStore((state) => state.setCurrentUser);
+  const setCurrentUser = useStore().user.getState().setCurrentUser;
 
   useEffect(() => {
     if (user) {
