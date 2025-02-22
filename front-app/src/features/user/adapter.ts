@@ -1,7 +1,8 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { userUsecase } from "./usecase";
 import { User } from "./model";
-import { userKeys } from "./type";
+import { useStore } from "@src/stores";
+import { userKeys } from "./queryKey";
 
 export const useGetUser = (id: string) => {
   return useQuery({
@@ -12,7 +13,12 @@ export const useGetUser = (id: string) => {
 };
 
 export const useCreateUser = () => {
+  const setTokens = useStore().auth.getState().setTokens;
+
   return useMutation({
+    onSuccess: (response) => {
+      setTokens(response.accessToken, response.refreshToken);
+    },
     mutationFn: (params: { id: string; name: string; age: number }) =>
       userUsecase.createUser(params),
   });

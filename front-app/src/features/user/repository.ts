@@ -1,21 +1,22 @@
-import axios from "axios";
+// import axios from "axios";
+import api, { IWrapperData } from "@src/utils/axiosInstance";
 import { User } from "./model";
 
 export const userRepository = {
-  async getUser(id: string): Promise<User | null> {
-    const { data } = await axios.get(`/api/users/${id}`);
+  async getUser(id: string) {
+    const { data } = await api.get<User | null>(`/api/users/${id}`);
     return data ?? null;
   },
 
-  async createUser(user: User): Promise<User> {
-    const { data } = await axios.post("/api/users", user);
+  async createUser(user: User) {
+    const { data } = await api.post<IWrapperData<User>>("/api/users", user);
     return data;
   },
-  async deleteUser(id: string): Promise<Response> {
-    return await axios.delete(`/api/items/${id}`, { method: "DELETE" });
+  async deleteUser(id: string) {
+    return await api.delete<{}>(`/api/items/${id}`, { method: "DELETE" });
   },
   async updateUser(id: string, user: User): Promise<User> {
-    const { data } = await axios.post(`/api/items/${id}`, {
+    const { data } = await api.post<User>(`/api/items/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(user),

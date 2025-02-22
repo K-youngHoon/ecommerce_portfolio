@@ -1,16 +1,3 @@
-import { User } from "./model";
-
-export interface ICreateUserParams {
-  id: string;
-  name: string;
-  age: number;
-}
-
-export interface IUserStore {
-  currentUser: User | null;
-  setCurrentUser: (user: User) => void;
-}
-
 export const userKeys = {
   all: ["user"] as const,
 

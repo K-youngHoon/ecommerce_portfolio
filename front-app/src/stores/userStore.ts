@@ -1,7 +1,11 @@
 import { createStore } from "zustand/vanilla";
 import { User } from "@src/features/user/model";
-import { IUserStore } from "@src/features/user/type";
 import { immer } from "zustand/middleware/immer";
+
+export interface IUserStore {
+  currentUser: User | null;
+  setCurrentUser: (user: User) => void;
+}
 
 export const useUserStore = createStore<IUserStore>((set) => ({
   currentUser: null,

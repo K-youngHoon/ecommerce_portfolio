@@ -1,11 +1,12 @@
 import { createContext, useContext } from "react";
 import { userStore } from "./userStore";
+import { authStore } from "./authStore";
 
 export const StoreContext = createContext<typeof stores | null>(null);
 
 export const stores = {
   user: userStore,
-  //   settings: settingsStore,
+  auth: authStore,
   //   products: productStore,
 };
 

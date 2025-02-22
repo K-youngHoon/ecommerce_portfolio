@@ -1,8 +1,9 @@
 import { css } from "@emotion/react";
 import styles from "@src/styles/button.module.scss";
+import { ReactNode } from "react";
 
 interface ButtonProps {
-  children: React.ReactNode;
+  children: ReactNode;
   onClick?: () => void;
   primary?: boolean;
 }

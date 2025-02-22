@@ -1,20 +1,34 @@
 import { User, userSchema } from "./model";
 import { userRepository } from "./repository";
 import { userService } from "./service";
-import { ICreateUserParams } from "./type";
 
 export const userUsecase = {
-  getUser: async (id: string): Promise<User | null> => {
-    return userRepository.getUser(id); // 애플리케이션 계층에서 Repository 사용
-  },
-  delUser: async (id: string): Promise<Response | null> => {
-    return userRepository.deleteUser(id); // 애플리케이션 계층에서 Repository 사용
-  },
-  updateUser: async (id: string, user: User): Promise<User | null> => {
-    return userRepository.updateUser(id, user); // 애플리케이션 계층에서 Repository 사용
+  getUser: async (id: string) => {
+    const user = await userRepository.getUser(id);
+    if (!user) throw new Error("사용자를 찾을 수 없습니다.");
+    return user;
   },
 
-  createUser: async (params: ICreateUserParams) => {
+  delUser: async (id: string) => {
+    const user = await userRepository.getUser(id);
+    if (!user) throw new Error("삭제할 사용자가 없습니다.");
+    await userRepository.deleteUser(id);
+    return { success: true };
+  },
+
+  updateUser: async (id: string, userData: Partial<User>) => {
+    const user = await userRepository.getUser(id);
+    if (!user) throw new Error("업데이트할 사용자가 없습니다.");
+
+    if (userData.name && userData.name.length < 3) {
+      throw new Error("이름은 3글자 이상이어야 합니다.");
+    }
+
+    const updatedUser = { ...user, ...userData };
+    return userRepository.updateUser(id, updatedUser);
+  },
+
+  createUser: async (params: { id: string; name: string; age: number }) => {
     // 1) 데이터 구조 검증 (Zod 스키마)
     const parsedResult = userSchema.safeParse(params);
     if (!parsedResult.success) {
