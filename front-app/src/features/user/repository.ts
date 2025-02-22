@@ -1,5 +1,6 @@
 // import axios from "axios";
-import api, { IWrapperData } from "@src/utils/axiosInstance";
+import api from "@src/utils/axios.instance";
+import { IApiResponse } from "@src/utils/type.generic";
 import { User } from "./model";
 
 export const userRepository = {
@@ -9,7 +10,7 @@ export const userRepository = {
   },
 
   async createUser(user: User) {
-    const { data } = await api.post<IWrapperData<User>>("/api/users", user);
+    const { data } = await api.post<IApiResponse<User>>("/api/users", user);
     return data;
   },
   async deleteUser(id: string) {

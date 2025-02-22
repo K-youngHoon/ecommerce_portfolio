@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useAuthStore } from "@src/stores/authStore";
+import { useAuthStore } from "@src/stores/auth.store";
 
 const api = axios.create({
   baseURL: "https://api.example.com",
@@ -47,10 +47,3 @@ export default api;
 //     },
 //   });
 // };
-
-export interface IWrapperData<T> {
-  refreshToken: string;
-  accessToken: string;
-
-  data: T;
-}

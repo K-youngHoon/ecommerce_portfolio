@@ -28,7 +28,7 @@ export const userUsecase = {
     return userRepository.updateUser(id, updatedUser);
   },
 
-  createUser: async (params: { id: string; name: string; age: number }) => {
+  createUser: async (params: User) => {
     // 1) 데이터 구조 검증 (Zod 스키마)
     const parsedResult = userSchema.safeParse(params);
     if (!parsedResult.success) {
