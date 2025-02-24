@@ -1,5 +1,4 @@
-import { updateUserSchema, User, userSchema } from "./model";
-import { userRepository } from "./repository";
+import { updateUserSchema, User, userSchema, userRepository } from "./";
 
 export const userUsecase = {
   getUser: async (id: string) => {

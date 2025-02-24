@@ -1,7 +1,6 @@
-// import axios from "axios";
 import api from "@src/utils/axios.instance";
-import { IApiResponse } from "@src/utils/type.generic";
-import { User } from "./model";
+import { IApiResponse } from "@src/types";
+import { User } from "./";
 
 export const userRepository = {
   async getUser(id: string) {

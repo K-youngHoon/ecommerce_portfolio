@@ -1,5 +1,4 @@
-import { useTheme } from "@src/hooks";
-import { useCounter } from "@src/hooks/useCounter";
+import { useTheme, useCounter } from "@src/hooks";
 import { Button } from "@src/components";
 
 export default function ButtonPage() {

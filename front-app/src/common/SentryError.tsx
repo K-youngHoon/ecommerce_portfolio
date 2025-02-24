@@ -1,4 +1,4 @@
-const SentryErrorPage = () => {
+export const SentryError = () => {
   return (
     <article className="error_wrap">
       <div className="container">
@@ -9,4 +9,3 @@ const SentryErrorPage = () => {
     </article>
   );
 };
-export { SentryErrorPage };

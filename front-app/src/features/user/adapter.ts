@@ -1,7 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { userUsecase } from "./usecase";
-import { User } from "./model";
-import { userKeys } from "./queryKey";
+import { userUsecase, User } from "./";
+import { userKeys } from "@src/types";
 
 export const useGetUser = (id: string) => {
   return useQuery({
