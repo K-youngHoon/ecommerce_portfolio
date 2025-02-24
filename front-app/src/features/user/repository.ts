@@ -13,11 +13,18 @@ export const userRepository = {
     const { data } = await api.post<IApiResponse<User>>("/api/users", user);
     return data;
   },
+
   async deleteUser(id: string) {
-    return await api.delete<{}>(`/api/items/${id}`, { method: "DELETE" });
+    return await api.delete<IApiResponse<{ success: boolean }>>(
+      `/api/items/${id}`,
+      {
+        method: "DELETE",
+      }
+    );
   },
-  async updateUser(id: string, user: User): Promise<User> {
-    const { data } = await api.post<User>(`/api/items/${id}`, {
+
+  async updateUser(id: string, user: User) {
+    const { data } = await api.post<IApiResponse<User>>(`/api/items/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(user),

@@ -1,7 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { userUsecase } from "./usecase";
 import { User } from "./model";
-import { useStore } from "@src/stores";
 import { userKeys } from "./queryKey";
 
 export const useGetUser = (id: string) => {
@@ -12,15 +11,14 @@ export const useGetUser = (id: string) => {
   });
 };
 
+// export const useCreateUser = () => {
+//   return useAuthMutation({
+//     mutationFn: userUsecase.createUser,
+//   });
+// };
 export const useCreateUser = () => {
-  const setTokens = useStore().auth.getState().setTokens;
-
   return useMutation({
-    onSuccess: (response) => {
-      setTokens(response.accessToken, response.refreshToken);
-    },
-    mutationFn: (params: { id: string; name: string; age: number }) =>
-      userUsecase.createUser(params),
+    mutationFn: userUsecase.createUser,
   });
 };
 
@@ -28,7 +26,7 @@ export const useDeleteUser = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (id: string) => userUsecase.delUser(id),
+    mutationFn: userUsecase.delUser,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: userKeys.all });
     },
@@ -41,20 +39,11 @@ export const useUpdateUser = () => {
   return useMutation({
     mutationFn: ({ id, user }: { id: string; user: User }) =>
       userUsecase.updateUser(id, user),
-    onSuccess: (updatedItem) => {
-      if (!updatedItem?.id) return; // id가 없으면 캐싱 건너뛰기
-
-      queryClient.setQueryData(
-        userKeys.detailById(updatedItem.id),
-        (oldData: any) => {
-          if (!Array.isArray(oldData)) return [updatedItem]; // oldData가 배열이 아닐 경우
-          return oldData.map((item: any) =>
-            item.id === updatedItem.id ? updatedItem : item
-          );
-        }
-      );
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: userKeys.detailById(variables.id),
+      });
     },
   });
 };
-
 //() => mutate(user.id , user)

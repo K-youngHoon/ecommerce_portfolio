@@ -1,6 +1,5 @@
-import { User, userSchema } from "./model";
+import { updateUserSchema, User, userSchema } from "./model";
 import { userRepository } from "./repository";
-import { userService } from "./service";
 
 export const userUsecase = {
   getUser: async (id: string) => {
@@ -17,14 +16,12 @@ export const userUsecase = {
   },
 
   updateUser: async (id: string, userData: Partial<User>) => {
+    const validatedData = updateUserSchema.parse(userData);
+
     const user = await userRepository.getUser(id);
     if (!user) throw new Error("업데이트할 사용자가 없습니다.");
 
-    if (userData.name && userData.name.length < 3) {
-      throw new Error("이름은 3글자 이상이어야 합니다.");
-    }
-
-    const updatedUser = { ...user, ...userData };
+    const updatedUser = { ...user, ...validatedData };
     return userRepository.updateUser(id, updatedUser);
   },
 
@@ -35,11 +32,6 @@ export const userUsecase = {
       throw new Error("유효하지 않은 User 데이터");
     }
     const user = parsedResult.data;
-
-    // 2) 도메인 로직
-    if (!userService.canRegister(user)) {
-      throw new Error("가입 불가 사용자입니다.");
-    }
 
     // 3) 저장
     const savedUser = await userRepository.createUser(user);
