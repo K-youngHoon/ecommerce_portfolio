@@ -4,8 +4,10 @@ import { User } from "./";
 
 export const userRepository = {
   async getUser(id: string) {
-    const { data } = await api.get<User | null>(`/api/users/${id}`);
-    return data ?? null;
+    const { data } = await api.get<IApiResponse<User | null>>(
+      `/api/users/${id}`
+    );
+    return data;
   },
 
   async createUser(user: User) {

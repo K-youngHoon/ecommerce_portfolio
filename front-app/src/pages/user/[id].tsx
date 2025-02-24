@@ -7,7 +7,7 @@ export default function UserPage() {
   const router = useRouter();
   const { id } = router.query;
   const { data: user, isLoading, error } = useGetUser(id as string);
-  const setCurrentUser = useStore().user.getState().setCurrentUser;
+  const { setCurrentUser } = useStore().user.getState();
 
   useEffect(() => {
     if (user) {
