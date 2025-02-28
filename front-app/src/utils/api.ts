@@ -37,7 +37,7 @@ api.interceptors.response.use(
   }
 );
 
-export default api;
+export { api };
 // export const useLogout = () => {
 //   const { clearTokens } = useAuthStore();
 

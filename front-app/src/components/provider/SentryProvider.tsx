@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import * as Sentry from "@sentry/nextjs";
-import { SentryError } from "@src/common";
+import { SentryError } from "@src/components/common";
 
 type Props = {
   children: ReactNode;

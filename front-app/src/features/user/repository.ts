@@ -1,4 +1,4 @@
-import api from "@src/utils/axios.instance";
+import { api } from "@src/utils";
 import { IApiResponse } from "@src/types";
 import { User } from "./";
 

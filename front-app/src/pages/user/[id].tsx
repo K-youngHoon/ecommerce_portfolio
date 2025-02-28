@@ -21,7 +21,7 @@ export default function UserPage() {
   return (
     <div>
       <h1>{user?.name}</h1>
-      <p>Age: {user?.age}</p>
+      <p>email: {user?.email}</p>
       {/* ... */}
     </div>
   );
