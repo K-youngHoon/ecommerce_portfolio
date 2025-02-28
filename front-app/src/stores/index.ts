@@ -7,7 +7,6 @@ export const StoreContext = createContext<typeof stores | null>(null);
 export const stores = {
   user: userStore,
   auth: authStore,
-  //   products: productStore,
 };
 
 export const useStore = () => {

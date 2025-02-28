@@ -1,13 +1,13 @@
 import axios from "axios";
-import { useAuthStore } from "@src/stores/auth.store";
+import { authStore } from "@src/stores/auth.store";
 
 const api = axios.create({
-  baseURL: "https://api.example.com",
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
 });
 
 // 요청 인터셉터: 토큰 자동 추가
 api.interceptors.request.use((config) => {
-  const { accessToken } = useAuthStore.getState();
+  const { accessToken } = authStore.getState();
   if (accessToken) {
     config.headers.Authorization = `Bearer ${accessToken}`;
   }
@@ -18,11 +18,11 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
-    const { refreshToken, setTokens, clearTokens } = useAuthStore.getState();
+    const { refreshToken, setTokens, clearTokens } = authStore.getState();
     if (error.response?.status === 401 && refreshToken) {
       try {
         const { data } = await axios.post(
-          "https://api.example.com/auth/refresh",
+          `${process.env.NEXT_PUBLIC_API_URL}/auth/refresh`,
           { refreshToken }
         );
         setTokens(data.accessToken, data.refreshToken);

@@ -7,11 +7,6 @@ export interface IUserStore {
   setCurrentUser: (user: User) => void;
 }
 
-export const useUserStore = createStore<IUserStore>((set) => ({
-  currentUser: null,
-  setCurrentUser: (user: User) => set({ currentUser: user }),
-}));
-
 export const userStore = createStore<IUserStore>()(
   immer((set) => ({
     currentUser: null,
