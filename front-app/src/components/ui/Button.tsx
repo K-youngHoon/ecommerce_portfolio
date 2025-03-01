@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import styles from "@src/styles/button.module.scss";
+import styles from "./button.module.scss";
 import { ReactNode } from "react";
 
 interface ButtonProps {

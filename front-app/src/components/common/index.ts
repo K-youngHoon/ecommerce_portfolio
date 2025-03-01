@@ -1,1 +1,1 @@
-export * from "./SentryError";
+export * from "./Modal";
