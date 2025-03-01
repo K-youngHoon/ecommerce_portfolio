@@ -1,5 +1,5 @@
 import { api } from "@src/utils";
-import { IApiResponse } from "@src/types";
+import { IApiResponse } from "@src/const";
 import { User } from "./";
 
 export const userRepository = {
