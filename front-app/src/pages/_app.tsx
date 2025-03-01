@@ -4,7 +4,7 @@ import {
   StoreProvider,
   SentryProvider,
   TanstackQueryProvider,
-} from "@src/components/provider";
+} from "@src/providers";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
