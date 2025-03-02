@@ -1,6 +1,5 @@
-import { createStore } from "zustand/vanilla";
 import { immer } from "zustand/middleware/immer";
-
+import { create } from "zustand";
 interface IAuthState {
   isLogin: boolean;
   accessToken: string | null;
@@ -9,7 +8,7 @@ interface IAuthState {
   clearTokens: () => void;
 }
 
-export const authStore = createStore<IAuthState>()(
+export const authStore = create<IAuthState>()(
   immer((set) => ({
     isLogin: false,
     accessToken: null,

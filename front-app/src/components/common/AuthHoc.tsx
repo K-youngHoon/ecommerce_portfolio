@@ -4,7 +4,7 @@ import { useEffect } from "react";
 
 export const authHoc = (Component: React.ComponentType) => (props: any) => {
   const router = useRouter();
-  const { isLogin } = useStore().auth.getState();
+  const { isLogin } = useStore().auth();
 
   // useStore().auth.setState((state) => {
   //   state.isLogin = true;

@@ -1,4 +1,4 @@
-import { authHoc } from "@src/components/hoc";
+import { authHoc } from "@src/components/common";
 
 function Home() {
   return <></>;

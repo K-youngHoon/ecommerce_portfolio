@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
-import { createStore } from "zustand/vanilla";
 import { immer } from "zustand/middleware/immer";
+import { create } from "zustand";
 
 interface IConfigState {
   modal: {
@@ -10,7 +10,7 @@ interface IConfigState {
   };
 }
 
-export const configStore = createStore<IConfigState>()(
+export const configStore = create<IConfigState>()(
   immer((set) => ({
     modal: {
       isOpen: false,
