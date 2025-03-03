@@ -8,6 +8,10 @@ interface IConfigState {
     children: ReactNode;
     setModal: (modal: Partial<Omit<IConfigState["modal"], "setModal">>) => void;
   };
+  load: {
+    isLoading: boolean;
+    setLoading: (isLoading: boolean) => void;
+  };
 }
 
 export const configStore = create<IConfigState>()(
@@ -19,6 +23,13 @@ export const configStore = create<IConfigState>()(
         set((state) => {
           state.modal.isOpen = isOpen ?? state.modal.isOpen;
           state.modal.children = children;
+        }),
+    },
+    load: {
+      isLoading: false,
+      setLoading: (isLoading: boolean) =>
+        set((state) => {
+          state.load.isLoading = isLoading;
         }),
     },
   }))

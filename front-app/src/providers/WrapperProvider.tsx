@@ -1,4 +1,4 @@
-import { ModalWrapper } from "@src/components/common";
+import { ModalWrapper, Loading } from "@src/components/common";
 import { JSX } from "react";
 
 const WrapperProvider = (props: React.PropsWithChildren<any>): JSX.Element => {
@@ -6,6 +6,7 @@ const WrapperProvider = (props: React.PropsWithChildren<any>): JSX.Element => {
     <div>
       {props.children}
       <ModalWrapper />
+      <Loading />
     </div>
   );
 };

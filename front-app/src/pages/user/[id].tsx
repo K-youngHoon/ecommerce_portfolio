@@ -8,6 +8,7 @@ export default function UserPage() {
   const { id } = router.query;
   const { data: user, isLoading, error } = useGetUser(id as string);
   const { setCurrentUser } = useStore().user();
+  const { load } = useStore().config();
 
   useEffect(() => {
     if (user) {
@@ -15,7 +16,8 @@ export default function UserPage() {
     }
   }, [user, setCurrentUser]);
 
-  if (isLoading) return <div>Loading...</div>;
+  load.setLoading(isLoading);
+
   if (error) return <div>에러 발생</div>;
 
   return (

@@ -1,2 +1,2 @@
-export * from "./MainHeader";
-export * from "./MainFooter";
+export * from "./HomeHeader";
+export * from "./HomeFooter";
