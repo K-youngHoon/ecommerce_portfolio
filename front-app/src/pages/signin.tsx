@@ -1,11 +1,11 @@
 import { useStore } from "@src/stores";
 
 export default function signin() {
-  const { modal, load } = useStore().config();
+  const { modal, loading } = useStore().config();
 
   const onClick = () => {
-    // modal.setModal({ isOpen: true, children: <div>test</div> });
-    load.setLoading(true);
+    modal.update({ isOpen: true, content: "test" });
+    // loading.update(true);
   };
 
   return <div onClick={onClick}>signin</div>;

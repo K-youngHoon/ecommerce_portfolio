@@ -8,16 +8,16 @@ export const ModalWrapper = () => {
     <div
       className={`modal ${modal.isOpen ? "open" : ""}`}
       css={modalDynamicStyles(modal.isOpen)}
-      onClick={() => modal.setModal({ isOpen: false })}
+      onClick={() => modal.update({ isOpen: false })}
     >
       {modal.isOpen && (
         <>
-          {modal.children === null ? (
+          {typeof modal.content === "string" ? (
             <div className="default_modal" onClick={(e) => e.stopPropagation()}>
-              {modal.children}
+              {modal.content}
             </div>
           ) : (
-            modal.children
+            modal.content
           )}
         </>
       )}

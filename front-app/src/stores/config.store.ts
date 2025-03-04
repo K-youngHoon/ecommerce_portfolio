@@ -5,12 +5,12 @@ import { create } from "zustand";
 interface IConfigState {
   modal: {
     isOpen: boolean;
-    children: ReactNode;
-    setModal: (modal: Partial<Omit<IConfigState["modal"], "setModal">>) => void;
+    content: ReactNode | string;
+    update: (modal: Partial<Omit<IConfigState["modal"], "update">>) => void;
   };
-  load: {
-    isLoading: boolean;
-    setLoading: (isLoading: boolean) => void;
+  loading: {
+    isActive: boolean;
+    update: (isActive: boolean) => void;
   };
 }
 
@@ -18,18 +18,18 @@ export const configStore = create<IConfigState>()(
   immer((set) => ({
     modal: {
       isOpen: false,
-      children: null,
-      setModal: ({ isOpen, children = null }) =>
-        set((state) => {
-          state.modal.isOpen = isOpen ?? state.modal.isOpen;
-          state.modal.children = children;
+      content: null,
+      update: ({ isOpen, content = null }) =>
+        set(({ modal }) => {
+          modal.isOpen = isOpen ?? modal.isOpen;
+          modal.content = content;
         }),
     },
-    load: {
-      isLoading: false,
-      setLoading: (isLoading: boolean) =>
-        set((state) => {
-          state.load.isLoading = isLoading;
+    loading: {
+      isActive: false,
+      update: (isActive: boolean) =>
+        set(({ loading }) => {
+          loading.isActive = isActive;
         }),
     },
   }))

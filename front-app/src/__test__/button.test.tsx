@@ -1,21 +1,28 @@
-import { render, screen } from "@testing-library/react";
-import React from "react";
+import { render, screen, fireEvent } from "@testing-library/react";
+import * as ButtonStories from "@src/components/ui/Buttom.stroies";
+import { composeStories } from "@storybook/react";
+const { Primary, Secondary } = composeStories(ButtonStories);
 
-import { Button } from "@src/stories/Button";
-// import { Button } from "../stories/Button";
+describe("Button Component", () => {
+  test("renders Primary button", () => {
+    render(<Primary />);
+    expect(screen.getByText("Primary Button")).toBeInTheDocument();
+  });
 
-const add = (x: number, y: number) => x + y;
+  test("renders Secondary button", () => {
+    render(<Secondary />);
+    expect(screen.getByText("Secondary Button")).toBeInTheDocument();
+  });
 
-// const Button = (props: { label: string }) => {
-//   return <button type="button">{props.label}</button>;
-// };
+  test("calls onClick when clicked", () => {
+    const handleClick = jest.fn();
+    render(<Primary onClick={handleClick} />);
+    fireEvent.click(screen.getByText("Primary Button"));
+    expect(handleClick).toHaveBeenCalledTimes(1);
+  });
 
-test("add", () => {
-  expect(add(1, 2)).toBe(3);
-});
-
-test("Button", () => {
-  render(<Button label="test" />);
-
-  screen.getByRole("button");
+  test("renders button with emoji", () => {
+    render(<Primary children="🚀 Click me" />);
+    expect(screen.getByText("🚀 Click me")).toBeInTheDocument();
+  });
 });
