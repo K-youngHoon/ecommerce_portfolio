@@ -25,4 +25,11 @@ describe("Button Component", () => {
     render(<Primary children="🚀 Click me" />);
     expect(screen.getByText("🚀 Click me")).toBeInTheDocument();
   });
+
+  test("calls onClick when clicked", () => {
+    const handleClick = jest.fn();
+    render(<Primary onClick={handleClick} />);
+    fireEvent.click(screen.getByText("Primary Button"));
+    expect(handleClick).toHaveBeenCalledTimes(1);
+  });
 });
