@@ -1,5 +1,5 @@
 import { useTheme, useCounter } from "@src/hooks";
-import { Button } from "@src/components";
+import { Button } from "@src/components/ui";
 
 export default function ButtonPage() {
   const { isDark, toggleTheme } = useTheme();
