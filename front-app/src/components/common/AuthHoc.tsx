@@ -12,7 +12,7 @@ export const authHoc = (Component: React.ComponentType) => (props: any) => {
 
   useEffect(() => {
     if (!isLogin) {
-      router.replace("/signin");
+      router.replace("/user/login");
     }
   }, [isLogin, router]);
 

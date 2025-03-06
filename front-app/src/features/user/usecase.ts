@@ -1,4 +1,10 @@
-import { updateUserSchema, User, userSchema, userRepository } from "./";
+import {
+  updateUserSchema,
+  User,
+  userSchema,
+  userRepository,
+  UpdateUser,
+} from "./";
 
 export const userUsecase = {
   getUser: async (id: string) => {
@@ -18,7 +24,7 @@ export const userUsecase = {
     return { success: true };
   },
 
-  updateUser: async (userData: Partial<User>) => {
+  updateUser: async (userData: UpdateUser) => {
     const validatedData = updateUserSchema.parse(userData);
 
     if (!userData.id) {

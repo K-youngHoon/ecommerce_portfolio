@@ -6,6 +6,8 @@ interface IAuthState {
   refreshToken: string | null;
   setTokens: (accessToken: string, refreshToken: string) => void;
   clearTokens: () => void;
+  isRemember: boolean;
+  toggleRemember: () => void;
 }
 
 export const authStore = create<IAuthState>()(
@@ -16,5 +18,7 @@ export const authStore = create<IAuthState>()(
     setTokens: (accessToken, refreshToken) =>
       set({ accessToken, refreshToken }),
     clearTokens: () => set({ accessToken: null, refreshToken: null }),
+    isRemember: false,
+    toggleRemember: () => set((state) => ({ isRemember: !state.isRemember })),
   }))
 );
