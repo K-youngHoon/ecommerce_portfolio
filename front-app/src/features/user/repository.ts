@@ -25,7 +25,7 @@ export const userRepository = {
   },
 
   async updateUser(id: string, user: User) {
-    const { data } = await api.post<IApiResponse<User>>(`/api/items/${id}`, {
+    const { data } = await api.put<IApiResponse<User>>(`/api/items/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(user),

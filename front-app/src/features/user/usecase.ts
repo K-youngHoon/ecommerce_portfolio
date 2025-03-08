@@ -41,7 +41,6 @@ export const userUsecase = {
   },
 
   createUser: async (params: User) => {
-    // 1) 데이터 구조 검증 (Zod 스키마)
     const parsedResult = userSchema.safeParse(params);
     if (!parsedResult.success) {
       throw new Error("유효하지 않은 User 데이터");
