@@ -4,23 +4,41 @@ import {
   signUpUserSchema,
   useCreateUser,
 } from "@src/features/user";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useUpdateEffect } from "react-use";
+// import { zodResolver } from "@hookform/resolvers/zod";
+// import { useUpdateEffect } from "react-use";
+// import { ZodError } from "zod";
+import { parseZodErrors } from "@src/utils";
 
 function SignUpPage() {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
-  } = useForm<SignUpUser>({
-    resolver: zodResolver(signUpUserSchema),
-  });
+  } = useForm<SignUpUser>();
+  // const {
+  //   register,
+  //   handleSubmit,
+  //   formState: { errors },
+  // } = useForm<SignUpUser>({
+  //   resolver: zodResolver(signUpUserSchema),
+  // });
 
   const mutation = useCreateUser();
 
   const onSubmit = (data: SignUpUser) => {
-    console.log("회원가입 시도", data);
-    mutation.mutate(data);
+    mutation.mutate(data, {
+      onError: (error) => {
+        const errorMessages = parseZodErrors(error);
+
+        Object.entries(errorMessages).forEach(([key, message]) => {
+          setError(key as keyof SignUpUser, {
+            type: "manual",
+            message,
+          });
+        });
+      },
+    });
   };
 
   return (

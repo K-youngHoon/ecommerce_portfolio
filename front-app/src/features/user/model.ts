@@ -5,7 +5,7 @@ export const userSchema = z.object({
     .string()
     .min(1, "아이디는 필수 입력사항입니다.")
     .min(3, "아이디는 최소 3자 이상 입력하세요."),
-  email: z.string().email(),
+  email: z.string().email("이메일형식이 올바르지 않습니다."),
   name: z.string().min(3),
 });
 

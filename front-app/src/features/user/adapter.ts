@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { userUsecase, User } from "./";
 import { userKeys } from "@src/const";
+import { ZodError } from "zod";
 
 export const useGetUser = (id: string) => {
   return useQuery({

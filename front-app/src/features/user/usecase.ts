@@ -1,9 +1,11 @@
+import { z, ZodError } from "zod";
 import {
   updateUserSchema,
   User,
   userSchema,
   userRepository,
   UpdateUser,
+  signUpUserSchema,
 } from "./";
 
 export const userUsecase = {
@@ -16,10 +18,6 @@ export const userUsecase = {
   },
 
   delUser: async (id: string) => {
-    const user = await userRepository.getUser(id);
-    if (!user) {
-      throw new Error("삭제할 사용자가 없습니다.");
-    }
     await userRepository.deleteUser(id);
     return { success: true };
   },
@@ -41,9 +39,14 @@ export const userUsecase = {
   },
 
   createUser: async (params: User) => {
-    const parsedResult = userSchema.safeParse(params);
+    // const parsedResult = userSchema.safeParse(params);
+    const parsedResult = signUpUserSchema.safeParse(params);
+
     if (!parsedResult.success) {
-      throw new Error("유효하지 않은 User 데이터");
+      // throw new ValidationError(parsedResult.error);
+      console.log(parsedResult.error);
+
+      throw parsedResult.error;
     }
     const user = parsedResult.data;
 
