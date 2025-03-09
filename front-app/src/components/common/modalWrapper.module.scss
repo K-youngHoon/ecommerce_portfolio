@@ -1,0 +1,20 @@
+.modal {
+  display: flex;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 99;
+  background-color: rgba(0, 0, 0, 0.7);
+  align-items: center;
+  justify-content: center;
+
+  .default_modal {
+    background-color: #ffffff;
+    border-radius: 10px;
+    width: 210px;
+    height: 150px;
+    opacity: 1;
+  }
+}

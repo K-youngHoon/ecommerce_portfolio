@@ -1,31 +1,32 @@
-import { css } from "@emotion/react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useStore } from "@src/stores";
-
+import styles from "./modalWrapper.module.scss";
 export const ModalWrapper = () => {
   const { modal } = useStore().config();
 
   return (
-    <div
-      className={`modal ${modal.isOpen ? "open" : ""}`}
-      css={modalDynamicStyles(modal.isOpen)}
-      onClick={() => modal.update({ isOpen: false })}
-    >
+    <AnimatePresence>
       {modal.isOpen && (
-        <>
-          {typeof modal.content === "string" ? (
-            <div className="default_modal" onClick={(e) => e.stopPropagation()}>
-              {modal.content}
-            </div>
-          ) : (
-            modal.content
-          )}
-        </>
+        <motion.div
+          className={styles.modal}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3 }}
+          onClick={() => modal.update({ isOpen: false })}
+        >
+          <motion.div
+            className={styles.default_modal}
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -50 }}
+            transition={{ duration: 0.3 }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {typeof modal.content === "string" ? modal.content : modal.content}
+          </motion.div>
+        </motion.div>
       )}
-    </div>
+    </AnimatePresence>
   );
 };
-
-const modalDynamicStyles = (isOpen: boolean) => css`
-  display: ${isOpen ? "flex" : "none"};
-  animation: ${isOpen ? "modal-bg-show 0.3s ease-out" : "none"};
-`;

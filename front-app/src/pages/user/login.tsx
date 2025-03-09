@@ -8,12 +8,17 @@ import Link from "next/link";
 function LoginPage() {
   const { isRemember, toggleRemember } = useStore().auth();
 
-  const methods = useForm<LoginUser>({
-    resolver: zodResolver(loginUserSchema),
-  });
+  const methods = useForm<LoginUser>();
+  // const methods = useForm<LoginUser>({
+  //   resolver: zodResolver(loginUserSchema),
+  // });
+
+  const { loading } = useStore().config();
 
   const onSubmit = (data: LoginUser) => {
     console.log("로그인 시도", data, isRemember);
+
+    loading.update(true);
   };
 
   return (
