@@ -1,5 +1,6 @@
 import axios from "axios";
 import { authStore } from "@src/stores/auth.store";
+import { IApiResponse } from "@src/const";
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -16,24 +17,40 @@ api.interceptors.request.use((config) => {
 
 // 응답 인터셉터: 토큰 만료 시 자동 갱신
 api.interceptors.response.use(
-  (response) => response,
-  async (error) => {
-    const { refreshToken, setTokens, clearTokens } = authStore.getState();
-    if (error.response?.status === 401 && refreshToken) {
-      try {
-        const { data } = await axios.post(
-          `${process.env.NEXT_PUBLIC_API_URL}/auth/refresh`,
-          { refreshToken }
-        );
-        setTokens(data.accessToken, data.refreshToken);
-        error.config.headers.Authorization = `Bearer ${data.accessToken}`;
-        return axios(error.config); // 실패한 요청 재시도
-      } catch (refreshError) {
-        clearTokens();
-        return Promise.reject(refreshError);
-      }
+  async (response) => {
+    if (response.data.error) {
+      return Promise.reject(new Error(response.data.error.message));
     }
-    return Promise.reject(error);
+    return response;
+  },
+  async (error) => {
+    if (error.response?.status !== 401) {
+      return Promise.reject(error);
+    }
+
+    const { refreshToken, setTokens, clearTokens } = authStore.getState();
+    if (!refreshToken) {
+      return Promise.reject(error);
+    }
+
+    try {
+      const { data } = await axios.post<
+        IApiResponse<{ accessToken: string; refreshToken: string }>
+      >(`${process.env.NEXT_PUBLIC_API_URL}/auth/refresh`, { refreshToken });
+
+      if (data.error || !data.data) {
+        throw new Error(data.error?.message);
+      }
+
+      setTokens(data.data.accessToken, data.data.refreshToken);
+
+      error.config.headers.Authorization = `Bearer ${data.data.accessToken}`;
+
+      return axios(error.config);
+    } catch (refreshError) {
+      clearTokens();
+      return Promise.reject(refreshError);
+    }
   }
 );
 

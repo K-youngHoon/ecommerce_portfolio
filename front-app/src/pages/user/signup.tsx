@@ -31,12 +31,9 @@ function SignUpPage() {
       onError: (error) => {
         const errorMessages = parseZodErrors(error);
 
-        Object.entries(errorMessages).forEach(([key, message]) => {
-          setError(key as keyof SignUpUser, {
-            type: "manual",
-            message,
-          });
-        });
+        Object.entries(errorMessages).forEach(([key, message]) =>
+          setError(key as keyof SignUpUser, { type: "manual", message })
+        );
       },
     });
   };

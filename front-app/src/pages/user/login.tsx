@@ -2,23 +2,33 @@ import styles from "./login.module.scss";
 import { useStore } from "@src/stores";
 import { LoginInput } from "@src/components/features";
 import { FormProvider, useForm } from "react-hook-form";
-import { LoginUser, loginUserSchema } from "@src/features/user";
+import { LoginUser, loginUserSchema, useLoginUser } from "@src/features/user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
+import { parseZodErrors } from "@src/utils";
 function LoginPage() {
   const { isRemember, toggleRemember } = useStore().auth();
+  const mutation = useLoginUser();
 
   const methods = useForm<LoginUser>();
   // const methods = useForm<LoginUser>({
   //   resolver: zodResolver(loginUserSchema),
   // });
 
-  const { loading } = useStore().config();
+  // const { loading } = useStore().config();
 
   const onSubmit = (data: LoginUser) => {
-    console.log("로그인 시도", data, isRemember);
+    console.log("로그인 시도", isRemember);
 
-    loading.update(true);
+    mutation.mutate(data, {
+      onError: (error) => {
+        const errorMessages = parseZodErrors(error);
+
+        Object.entries(errorMessages).forEach(([key, message]) =>
+          methods.setError(key as keyof LoginUser, { type: "manual", message })
+        );
+      },
+    });
   };
 
   return (
