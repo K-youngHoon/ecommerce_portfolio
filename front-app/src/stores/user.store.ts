@@ -3,17 +3,17 @@ import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 
 export interface IUserStore {
-  currentUser: User | null;
-  setCurrentUser: (user: User) => void;
+  myInfo: User | null;
+  setMyInfo: (user: User) => void;
 }
 
 export const userStore = create<IUserStore>()(
   immer((set) => ({
-    currentUser: null,
-    setCurrentUser: (user) =>
+    myInfo: null,
+    setMyInfo: (user) =>
       set((state) => {
         // if (state.currentUser) state.currentUser.id = user.id;
-        state.currentUser = user;
+        state.myInfo = user;
       }),
   }))
 );
