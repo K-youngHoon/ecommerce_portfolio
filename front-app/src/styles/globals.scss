@@ -1,5 +1,5 @@
-@import "variables";
-@import "mixins";
+@use "variables" as *;
+@use "mixins" as *;
 
 :root {
   --background: #ffffff;
@@ -19,6 +19,10 @@ body {
   overflow-x: hidden;
   background-color: $background-color;
   color: $text-color;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 body {

@@ -1,12 +1,12 @@
 import { useFormContext } from "react-hook-form";
 
-interface LoginInputProps {
+interface ILoginInputProps {
   name: string;
   label: string;
   type?: string;
 }
 
-export const LoginInput = ({ name, label, type = "text" }: LoginInputProps) => {
+export const LoginInput = ({ name, label }: ILoginInputProps) => {
   const {
     register,
     formState: { errors },
@@ -15,7 +15,7 @@ export const LoginInput = ({ name, label, type = "text" }: LoginInputProps) => {
   return (
     <div>
       <label>{label}</label>
-      <input type={type} {...register(name)} />
+      <input type={"text"} {...register(name)} />
       {errors[name] && <p>{errors[name]?.message as string}</p>}
     </div>
   );

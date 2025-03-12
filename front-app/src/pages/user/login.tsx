@@ -32,41 +32,39 @@ function LoginPage() {
   };
 
   return (
-    <>
-      <div className={styles.container}>
-        <div className={styles.logo}>NAVER</div>
-        <div className={styles.loginBox}>
-          <FormProvider {...methods}>
-            <form onSubmit={methods.handleSubmit(onSubmit)}>
-              <div className={styles.inputGroup}>
-                <LoginInput name="id" label="아이디" />
-              </div>
-              <div className={styles.inputGroup}>
-                <LoginInput name="password" label="비밀번호" type="password" />
-              </div>
+    <div className={styles.container}>
+      <div className={styles.logo}>NAVER</div>
+      <div className={styles.loginBox}>
+        <FormProvider {...methods}>
+          <form onSubmit={methods.handleSubmit(onSubmit)}>
+            <div className={styles.inputGroup}>
+              <LoginInput name="id" label="아이디" />
+            </div>
+            <div className={styles.inputGroup}>
+              <LoginInput name="password" label="비밀번호" type="password" />
+            </div>
 
-              <div className={styles.rememberMe}>
-                <input
-                  id="rememberMe"
-                  type="checkbox"
-                  checked={isRemember}
-                  onChange={toggleRemember}
-                />
-                <label htmlFor="rememberMe">로그인 상태 유지</label>
-              </div>
-              <button type="submit" className={styles.loginButton}>
-                로그인
-              </button>
-            </form>
-          </FormProvider>
-          <div className={styles.helpLinks}>
-            <Link href="#">비밀번호 찾기</Link>
-            <Link href="#">아이디 찾기</Link>
-            <Link href="/user/signup">회원가입</Link>
-          </div>
+            <div className={styles.rememberMe}>
+              <input
+                id="rememberMe"
+                type="checkbox"
+                checked={isRemember}
+                onChange={toggleRemember}
+              />
+              <label htmlFor="rememberMe">로그인 상태 유지</label>
+            </div>
+            <button type="submit" className={styles.loginButton}>
+              로그인
+            </button>
+          </form>
+        </FormProvider>
+        <div className={styles.helpLinks}>
+          <Link href="#">비밀번호 찾기</Link>
+          <Link href="#">아이디 찾기</Link>
+          <Link href="/user/signup">회원가입</Link>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

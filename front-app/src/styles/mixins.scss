@@ -3,3 +3,10 @@
   justify-content: center;
   align-items: center;
 }
+
+@mixin allow-to-drag {
+  -webkit-user-select: all;
+  -moz-user-select: all;
+  -ms-user-select: all;
+  user-select: all;
+}
