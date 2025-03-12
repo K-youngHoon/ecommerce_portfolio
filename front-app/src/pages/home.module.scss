@@ -1,0 +1,31 @@
+@use "mixins" as *;
+
+.swiper-container {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.main-container {
+  @include main-container(18px, 18px);
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  color: black !important; /* 네비게이션 버튼 색상 */
+}
+
+.swiper-pagination-bullet {
+  background-color: gray !important;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: black !important;
+}
+
+.swiper-scrollbar {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.swiper-scrollbar-drag {
+  background: black;
+}

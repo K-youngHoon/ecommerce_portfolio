@@ -10,3 +10,9 @@
   -ms-user-select: all;
   user-select: all;
 }
+
+@mixin main-container($header-height, $footer-height) {
+  border: 1px solid red;
+  height: calc(100vh - #{$header-height} - #{$footer-height});
+  width: 100%;
+}
