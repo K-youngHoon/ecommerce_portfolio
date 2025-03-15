@@ -1,44 +1,63 @@
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Swiper as SwiperType } from "swiper";
 import {
   Navigation,
   Pagination,
-  EffectFade,
   Autoplay,
   Scrollbar,
-  Thumbs,
-  FreeMode,
+  Virtual,
+  A11y,
 } from "swiper/modules";
-// import "swiper/css";
-// import "swiper/css/navigation";
-// import "swiper/css/pagination";
-// import "swiper/css/scrollbar";
-// import "swiper/css/free-mode";
-// import "swiper/css/thumbs";
-// import "swiper/css/effect-fade";
-// import "./bannerSlider.scss";
+import "swiper/css/navigation";
 import "swiper/css";
 import "swiper/css/pagination";
 import styles from "./bannerSlider.module.scss";
+import { useRef } from "react";
 
 // 배너 데이터
 
 export const BannerSlider = () => {
+  const swiperRef = useRef<SwiperType>(null);
+  const loopRef = useRef(true);
   return (
-    <Swiper
-      slidesPerView={3}
-      spaceBetween={30}
-      pagination={{
-        clickable: true,
-      }}
-      modules={[Pagination]}
-      className={styles.swiper}
-      loop
-    >
-      {Array.from({ length: 10 }, (_, i) => (
-        <SwiperSlide key={i} className={styles.swiperSlide}>
-          Slide {i + 1}
-        </SwiperSlide>
-      ))}
-    </Swiper>
+    <>
+      <Swiper
+        modules={[Virtual, Navigation, Pagination, Scrollbar, A11y, Autoplay]}
+        slidesPerView={3}
+        centeredSlides={true}
+        spaceBetween={30}
+        pagination={{
+          type: "fraction",
+        }}
+        onBeforeInit={(swiper) => {
+          swiperRef.current = swiper;
+        }}
+        autoplay={{ pauseOnMouseEnter: true }}
+        loop={loopRef.current}
+        className={styles.swiper}
+      >
+        {Array.from({ length: 8 }).map((_, index) => (
+          <SwiperSlide
+            key={index}
+            className={styles.swiperSlide}
+            onClick={() => console.log(index)}
+          >
+            Slide {index + 1}
+          </SwiperSlide>
+        ))}
+      </Swiper>
+      <div>
+        <button
+          onClick={() => {
+            swiperRef.current?.autoplay[loopRef.current ? "stop" : "start"]?.();
+            loopRef.current = !loopRef.current;
+          }}
+        >
+          stop
+        </button>
+        <button onClick={() => swiperRef.current?.slidePrev()}>Prev</button>
+        <button onClick={() => swiperRef.current?.slideNext()}>Next</button>
+      </div>
+    </>
   );
 };
