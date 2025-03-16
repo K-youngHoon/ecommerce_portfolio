@@ -1,11 +1,11 @@
 import styles from "./login.module.scss";
 import { useStore } from "@src/stores";
-import { LoginInput } from "@src/components/features";
 import { FormProvider, useForm } from "react-hook-form";
 import { LoginUser, loginUserSchema, useLoginUser } from "@src/features/user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { parseZodErrors } from "@src/utils";
+import { LoginInput } from "@src/components/auth";
 function LoginPage() {
   const { isRemember, toggleRemember } = useStore().auth();
   const mutation = useLoginUser();

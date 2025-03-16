@@ -1,8 +1,8 @@
-import { authHoc } from "@src/components/common";
+import { authHoc } from "@src/components/auth";
 import { HomeHeader, HomeFooter } from "@src/components/layouts";
 
 import homeStyles from "./home.module.scss";
-import { BannerSlider } from "@src/components/features";
+import { BannerSlider } from "@src/components/slide";
 
 function Home() {
   return (

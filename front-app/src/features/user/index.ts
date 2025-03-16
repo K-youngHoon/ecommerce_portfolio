@@ -1,4 +1,4 @@
-export * from "./model";
+export * from "./models";
 export * from "./repository";
 export * from "./service";
 export * from "./utils";

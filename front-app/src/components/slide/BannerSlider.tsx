@@ -13,12 +13,30 @@ import "swiper/css";
 import "swiper/css/pagination";
 import styles from "./bannerSlider.module.scss";
 import { useRef } from "react";
+import { useStore } from "@src/stores";
+import { ErrorModal } from "../error";
 
 // 배너 데이터
 
 export const BannerSlider = () => {
   const swiperRef = useRef<SwiperType>(null);
   const loopRef = useRef(true);
+
+  const { modal } = useStore().config();
+
+  const onLoop = () => {
+    try {
+      if (swiperRef.current === null) {
+        throw new Error();
+      }
+
+      swiperRef.current.autoplay[loopRef.current ? "stop" : "start"]();
+      loopRef.current = !loopRef.current;
+    } catch (error) {
+      modal.update({ isOpen: true, content: <ErrorModal /> });
+    }
+  };
+
   return (
     <>
       <Swiper
@@ -47,14 +65,7 @@ export const BannerSlider = () => {
         ))}
       </Swiper>
       <div>
-        <button
-          onClick={() => {
-            swiperRef.current?.autoplay[loopRef.current ? "stop" : "start"]?.();
-            loopRef.current = !loopRef.current;
-          }}
-        >
-          stop
-        </button>
+        <button onClick={onLoop}>stop</button>
         <button onClick={() => swiperRef.current?.slidePrev()}>Prev</button>
         <button onClick={() => swiperRef.current?.slideNext()}>Next</button>
       </div>
