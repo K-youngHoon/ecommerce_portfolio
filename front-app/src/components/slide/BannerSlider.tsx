@@ -18,12 +18,15 @@ import { ErrorModal } from "../error";
 
 // 배너 데이터
 
-export const BannerSlider = () => {
+interface IProps {
+  list: never[];
+}
+
+export const BannerSlider = (props: IProps) => {
   const swiperRef = useRef<SwiperType>(null);
   const loopRef = useRef(true);
 
   const [currentIdx, setCurrentIdx] = useState(0);
-  const length = 8;
 
   const { modal } = useStore().config();
 
@@ -53,7 +56,7 @@ export const BannerSlider = () => {
         className={styles.swiper}
         onRealIndexChange={(s) => setCurrentIdx(s.realIndex)}
       >
-        {Array.from({ length }).map((_, index) => (
+        {props.list.map((_, index) => (
           <SwiperSlide key={index} className={styles.swiperSlide}>
             Slide {index + 1}
           </SwiperSlide>
@@ -65,7 +68,7 @@ export const BannerSlider = () => {
         <div className={styles.pagination}>
           <button onClick={onPlay}>stop</button>
           <div>
-            {currentIdx + 1}/{length}
+            {currentIdx + 1}/{props.list.length}
           </div>
         </div>
         <button onClick={() => swiperRef.current?.slideNext()}>Next</button>
