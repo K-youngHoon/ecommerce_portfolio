@@ -32,12 +32,24 @@ export const BannerSlider = (props: IProps) => {
 
   const onPlay = () => {
     try {
-      if (swiperRef.current === null) {
+      if (!swiperRef.current) {
         throw new Error();
       }
 
       swiperRef.current.autoplay[loopRef.current ? "stop" : "start"]();
       loopRef.current = !loopRef.current;
+    } catch (error) {
+      modal.update({ isOpen: true, content: <ErrorModal /> });
+    }
+  };
+
+  const onNext = (keyword: "slidePrev" | "slideNext") => () => {
+    try {
+      if (!swiperRef.current) {
+        throw new Error();
+      }
+
+      swiperRef.current?.[keyword]();
     } catch (error) {
       modal.update({ isOpen: true, content: <ErrorModal /> });
     }
@@ -64,14 +76,14 @@ export const BannerSlider = (props: IProps) => {
       </Swiper>
 
       <div className={styles.buttonContainer}>
-        <button onClick={() => swiperRef.current?.slidePrev()}>Prev</button>
+        <button onClick={onNext("slidePrev")}>Prev</button>
         <div className={styles.pagination}>
           <button onClick={onPlay}>stop</button>
           <div>
             {currentIdx + 1}/{props.list.length}
           </div>
         </div>
-        <button onClick={() => swiperRef.current?.slideNext()}>Next</button>
+        <button onClick={onNext("slideNext")}>Next</button>
       </div>
     </div>
   );
