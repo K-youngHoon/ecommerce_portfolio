@@ -13,8 +13,6 @@ import "swiper/css";
 import "swiper/css/pagination";
 import styles from "./bannerSlider.module.scss";
 import { useRef, useState } from "react";
-import { useStore } from "@src/stores";
-import { ErrorModal } from "../error";
 
 // 배너 데이터
 
@@ -24,36 +22,30 @@ interface IProps {
 
 export const BannerSlider = (props: IProps) => {
   const swiperRef = useRef<SwiperType>(null);
-  const loopRef = useRef(true);
+  const [isAutoplayActive, setIsAutoplayActive] = useState(true);
 
   const [currentIdx, setCurrentIdx] = useState(0);
 
-  const { modal } = useStore().config();
+  const checkSwiper =
+    (action: (swiper: NonNullable<typeof swiperRef.current>) => void) => () => {
+      try {
+        if (!swiperRef.current) {
+          throw new Error("instance is not init");
+        }
 
-  const onPlay = () => {
-    try {
-      if (!swiperRef.current) {
-        throw new Error();
+        action(swiperRef.current);
+      } catch (error) {
+        console.error("Error executing Swiper action:", error);
       }
+    };
 
-      swiperRef.current.autoplay[loopRef.current ? "stop" : "start"]();
-      loopRef.current = !loopRef.current;
-    } catch (error) {
-      modal.update({ isOpen: true, content: <ErrorModal /> });
-    }
-  };
+  const onPlay = checkSwiper((swiper) => {
+    swiper.autoplay[isAutoplayActive ? "stop" : "start"]();
+    setIsAutoplayActive((prev) => !prev);
+  });
 
-  const onNext = (keyword: "slidePrev" | "slideNext") => () => {
-    try {
-      if (!swiperRef.current) {
-        throw new Error();
-      }
-
-      swiperRef.current?.[keyword]();
-    } catch (error) {
-      modal.update({ isOpen: true, content: <ErrorModal /> });
-    }
-  };
+  const onNext = (direction: "slidePrev" | "slideNext") =>
+    checkSwiper((swiper) => swiper[direction]());
 
   return (
     <div>
@@ -64,7 +56,7 @@ export const BannerSlider = (props: IProps) => {
         spaceBetween={30}
         onBeforeInit={(swiper) => (swiperRef.current = swiper)}
         autoplay={{ pauseOnMouseEnter: true }}
-        loop={loopRef.current}
+        loop={isAutoplayActive}
         className={styles.swiper}
         onRealIndexChange={(s) => setCurrentIdx(s.realIndex)}
       >
@@ -78,7 +70,9 @@ export const BannerSlider = (props: IProps) => {
       <div className={styles.buttonContainer}>
         <button onClick={onNext("slidePrev")}>Prev</button>
         <div className={styles.pagination}>
-          <button onClick={onPlay}>stop</button>
+          <button onClick={onPlay}>
+            {isAutoplayActive ? "stop" : "start"}
+          </button>
           <div>
             {currentIdx + 1}/{props.list.length}
           </div>
