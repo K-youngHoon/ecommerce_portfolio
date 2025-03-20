@@ -26,26 +26,33 @@ export const BannerSlider = (props: IProps) => {
 
   const [currentIdx, setCurrentIdx] = useState(0);
 
-  const checkSwiper =
-    (action: (swiper: NonNullable<typeof swiperRef.current>) => void) => () => {
-      try {
-        if (!swiperRef.current) {
-          throw new Error("instance is not init");
-        }
+  const checkInstance = (swiper: typeof swiperRef.current) => {
+    if (!swiper) {
+      throw new Error("swiper instance is not init");
+    }
 
-        action(swiperRef.current);
-      } catch (error) {
-        console.error("Error executing Swiper action:", error);
-      }
-    };
+    return swiper;
+  };
 
-  const onPlay = checkSwiper((swiper) => {
-    swiper.autoplay[isAutoplayActive ? "stop" : "start"]();
-    setIsAutoplayActive((prev) => !prev);
-  });
+  const onPlay = () => {
+    try {
+      const swiper = checkInstance(swiperRef.current);
 
-  const onNext = (direction: "slidePrev" | "slideNext") =>
-    checkSwiper((swiper) => swiper[direction]());
+      swiper.autoplay[isAutoplayActive ? "stop" : "start"]();
+      setIsAutoplayActive((prev) => !prev);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const onMove = (direction: "slidePrev" | "slideNext") => {
+    try {
+      const swiper = checkInstance(swiperRef.current);
+      swiper[direction]();
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div>
@@ -68,7 +75,7 @@ export const BannerSlider = (props: IProps) => {
       </Swiper>
 
       <div className={styles.buttonContainer}>
-        <button onClick={onNext("slidePrev")}>Prev</button>
+        <button onClick={() => onMove("slidePrev")}>Prev</button>
         <div className={styles.pagination}>
           <button onClick={onPlay}>
             {isAutoplayActive ? "stop" : "start"}
@@ -77,7 +84,7 @@ export const BannerSlider = (props: IProps) => {
             {currentIdx + 1}/{props.list.length}
           </div>
         </div>
-        <button onClick={onNext("slideNext")}>Next</button>
+        <button onClick={() => onMove("slideNext")}>Next</button>
       </div>
     </div>
   );
