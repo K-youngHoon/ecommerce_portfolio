@@ -13,7 +13,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import styles from "./bannerSlider.module.scss";
 import { useRef, useState } from "react";
-
+import { useSlide } from "@src/hooks";
 // 배너 데이터
 
 interface IProps {
@@ -21,38 +21,8 @@ interface IProps {
 }
 
 export const BannerSlider = (props: IProps) => {
-  const swiperRef = useRef<SwiperType>(null);
-  const [isAutoplayActive, setIsAutoplayActive] = useState(true);
-
+  const { swiperRef, isAutoplayActive, onMove, loofToggle } = useSlide();
   const [currentIdx, setCurrentIdx] = useState(0);
-
-  const checkInstance = (swiper: typeof swiperRef.current) => {
-    if (!swiper) {
-      throw new Error("swiper instance is not init");
-    }
-
-    return swiper;
-  };
-
-  const onPlay = () => {
-    try {
-      const swiper = checkInstance(swiperRef.current);
-
-      swiper.autoplay[isAutoplayActive ? "stop" : "start"]();
-      setIsAutoplayActive((prev) => !prev);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const onMove = (direction: "slidePrev" | "slideNext") => {
-    try {
-      const swiper = checkInstance(swiperRef.current);
-      swiper[direction]();
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   return (
     <div>
@@ -77,7 +47,7 @@ export const BannerSlider = (props: IProps) => {
       <div className={styles.buttonContainer}>
         <button onClick={() => onMove("slidePrev")}>Prev</button>
         <div className={styles.pagination}>
-          <button onClick={onPlay}>
+          <button onClick={loofToggle}>
             {isAutoplayActive ? "stop" : "start"}
           </button>
           <div>

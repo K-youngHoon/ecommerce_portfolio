@@ -1,2 +1,2 @@
-export * from "./useCounter";
+export * from "./useSlide";
 export * from "./useTheme";
