@@ -21,8 +21,10 @@ interface IProps {
 }
 
 export const BannerSlider = (props: IProps) => {
-  const { swiperRef, isAutoplayActive, onMove, loofToggle } = useSlide();
-  const [currentIdx, setCurrentIdx] = useState(0);
+  const { isLoop, onMove, loopToggle, currentIndex, initialProps } = useSlide({
+    index: 0,
+    loop: true,
+  });
 
   return (
     <div>
@@ -31,11 +33,9 @@ export const BannerSlider = (props: IProps) => {
         slidesPerView={3}
         centeredSlides={true}
         spaceBetween={30}
-        onBeforeInit={(swiper) => (swiperRef.current = swiper)}
         autoplay={{ pauseOnMouseEnter: true }}
-        loop={isAutoplayActive}
         className={styles.swiper}
-        onRealIndexChange={(s) => setCurrentIdx(s.realIndex)}
+        {...initialProps}
       >
         {props.list.map((_, index) => (
           <SwiperSlide key={index} className={styles.swiperSlide}>
@@ -47,11 +47,9 @@ export const BannerSlider = (props: IProps) => {
       <div className={styles.buttonContainer}>
         <button onClick={() => onMove("slidePrev")}>Prev</button>
         <div className={styles.pagination}>
-          <button onClick={loofToggle}>
-            {isAutoplayActive ? "stop" : "start"}
-          </button>
+          <button onClick={loopToggle}>{isLoop ? "stop" : "start"}</button>
           <div>
-            {currentIdx + 1}/{props.list.length}
+            {currentIndex + 1}/{props.list.length}
           </div>
         </div>
         <button onClick={() => onMove("slideNext")}>Next</button>
