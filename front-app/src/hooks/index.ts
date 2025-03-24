@@ -1,2 +1,1 @@
-export * from "./useSlide";
-export * from "./useTheme";
+// export * from "./useSlide";

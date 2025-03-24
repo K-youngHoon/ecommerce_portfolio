@@ -13,7 +13,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import styles from "./bannerSlider.module.scss";
 import { useRef, useState } from "react";
-import { useSlide } from "@src/hooks";
+import { useSlide } from "./useSlide";
 // 배너 데이터
 
 interface IProps {
