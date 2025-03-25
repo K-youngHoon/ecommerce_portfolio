@@ -1,1 +1,1 @@
-// export * from "./useSlide";
+export * from "./useObjState";
